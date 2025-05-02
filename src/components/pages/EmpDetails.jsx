@@ -10,7 +10,6 @@ const EmpDetails = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     useEffect(() => {
-        // Fetch employee data from localStorage
         const fetchEmployee = () => {
             try {
                 setLoading(true);
@@ -68,16 +67,13 @@ const EmpDetails = () => {
     }
     return (
         <div className="min-h-screen bg-gray-50 p-4 md:p-8">
-            {/* Header with back button */}
             <div className="mb-6 flex justify-between items-center">
                 <Link to="/" className="flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors">
                     <MdArrowBack className="text-xl" />
                     <span className="font-medium">Back to Directory</span>
                 </Link>
             </div>
-            {/* Employee profile card */}
             <div className="bg-white rounded-xl shadow-md overflow-hidden max-w-4xl mx-auto">
-                {/* Header section with employee name and photo */}
                 <div className="bg-gradient-to-r from-blue-700 to-blue-500 p-6 text-white">
                     <div className="flex flex-col md:flex-row gap-6 items-center">
                         <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-white text-blue-600 flex items-center justify-center text-3xl md:text-4xl font-bold shadow-lg">
@@ -94,10 +90,8 @@ const EmpDetails = () => {
                         </div>
                     </div>
                 </div>
-                {/* Details section */}
                 <div className="p-6">
                     <div className="gap-6">
-                        {/* Personal Information */}
                         <div className="bg-gray-50 p-4 rounded-lg">
                             <h2 className="text-lg font-semibold mb-4 text-gray-700 border-b pb-2">Personal Information</h2>
                             <div className="space-y-4">

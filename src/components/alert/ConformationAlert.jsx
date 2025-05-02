@@ -10,13 +10,12 @@ const ConfirmationAlert = ({
   title = "Confirmation",
   confirmText = "Confirm",
   cancelText = "Cancel",
-  type = "warning" // Can be "warning", "error", "info"
+  type = "warning" 
 }) => {
   if (!isOpen) return null;
 
 
 
-  // const { icon, buttonColor, iconBg } = getTypeStyles();
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-4">

@@ -1,4 +1,3 @@
-// EmployeeForm.jsx
 import { useState, useEffect } from 'react';
 import { MdOutlineEmail } from 'react-icons/md';
 import { TfiBag } from "react-icons/tfi";
@@ -7,7 +6,6 @@ import { FaCalendarAlt, FaUser } from 'react-icons/fa';
 import { IoCallOutline } from 'react-icons/io5';
 
 const EmployeeForm = ({ isOpen, onClose, onSubmit, isEditing, initialData }) => {
-  // Use initialData or empty object for initial state
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -17,7 +15,6 @@ const EmployeeForm = ({ isOpen, onClose, onSubmit, isEditing, initialData }) => 
     age:'',
   });
 
-  // Reset form or populate with data when modal opens or initialData changes
   useEffect(() => {
     if (isOpen) {
       if (isEditing && initialData) {
@@ -30,7 +27,6 @@ const EmployeeForm = ({ isOpen, onClose, onSubmit, isEditing, initialData }) => 
           age: initialData.age || ''
         });
       } else {
-        // Reset form if not editing
         setFormData({
           firstName: '',
           lastName: '',
@@ -54,10 +50,11 @@ const EmployeeForm = ({ isOpen, onClose, onSubmit, isEditing, initialData }) => 
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    // If editing, pass the ID along with form data
     if (isEditing && initialData) {
       onSubmit({
-        ...formData,
+        ...initialData, 
+        email: formData.email,
+        position: formData.position,
         id: initialData.id
       });
     } else {
@@ -67,7 +64,6 @@ const EmployeeForm = ({ isOpen, onClose, onSubmit, isEditing, initialData }) => 
     onClose();
   };
 
-  // Handle closing on Escape key
   useEffect(() => {
     const handleEscape = (e) => {
       if (e.key === 'Escape' && isOpen) {
@@ -77,7 +73,6 @@ const EmployeeForm = ({ isOpen, onClose, onSubmit, isEditing, initialData }) => 
     
     document.addEventListener('keydown', handleEscape);
     
-    // Prevent scrolling when modal is open
     if (isOpen) {
       document.body.style.overflow = 'hidden';
     }
@@ -108,6 +103,9 @@ const EmployeeForm = ({ isOpen, onClose, onSubmit, isEditing, initialData }) => 
           <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mt-3 sm:mt-4">
             {isEditing ? 'Edit Employee' : 'Add New Employee'}
           </h2>
+          {isEditing && (
+            <p className="text-gray-500 text-sm mt-1">Only job title and email can be modified</p>
+          )}
         </div>
         
         <form onSubmit={handleSubmit}>
@@ -120,8 +118,10 @@ const EmployeeForm = ({ isOpen, onClose, onSubmit, isEditing, initialData }) => 
                   name="firstName"
                   value={formData.firstName}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className={`w-full px-3 py-2 border border-gray-300 rounded-lg ${isEditing ? 'bg-gray-100' : 'focus:outline-none focus:ring-2 focus:ring-blue-500'}`}
                   required
+                  readOnly={isEditing}
+                  disabled={isEditing}
                 />
               </div>
               <div>
@@ -131,8 +131,10 @@ const EmployeeForm = ({ isOpen, onClose, onSubmit, isEditing, initialData }) => 
                   name="lastName"
                   value={formData.lastName}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className={`w-full px-3 py-2 border border-gray-300 rounded-lg ${isEditing ? 'bg-gray-100' : 'focus:outline-none focus:ring-2 focus:ring-blue-500'}`}
                   required
+                  readOnly={isEditing}
+                  disabled={isEditing}
                 />
               </div>
             </div>
@@ -148,8 +150,10 @@ const EmployeeForm = ({ isOpen, onClose, onSubmit, isEditing, initialData }) => 
                   name="age"
                   value={formData.age}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className={`w-full px-3 py-2 border border-gray-300 rounded-lg ${isEditing ? 'bg-gray-100' : 'focus:outline-none focus:ring-2 focus:ring-blue-500'}`}
                   required
+                  readOnly={isEditing}
+                  disabled={isEditing}
                 />
               </div>
               <div>
@@ -162,8 +166,10 @@ const EmployeeForm = ({ isOpen, onClose, onSubmit, isEditing, initialData }) => 
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className={`w-full px-3 py-2 border border-gray-300 rounded-lg ${isEditing ? 'bg-gray-100' : 'focus:outline-none focus:ring-2 focus:ring-blue-500'}`}
                   required
+                  readOnly={isEditing}
+                  disabled={isEditing}
                 />
               </div>
             </div>
@@ -172,6 +178,7 @@ const EmployeeForm = ({ isOpen, onClose, onSubmit, isEditing, initialData }) => 
               <label className="flex items-center gap-2 text-gray-700 text-sm font-medium mb-1">
                 <MdOutlineEmail className="text-amber-500" />
                 Email Address
+                {isEditing && <span className="text-xs text-blue-600 font-normal">(Editable)</span>}
               </label>
               <input
                 type="email"
@@ -187,6 +194,7 @@ const EmployeeForm = ({ isOpen, onClose, onSubmit, isEditing, initialData }) => 
               <label className="flex items-center gap-2 text-gray-700 text-sm font-medium mb-1">
                 <TfiBag className="text-amber-500" />
                 Position
+                {isEditing && <span className="text-xs text-blue-600 font-normal">(Editable)</span>}
               </label>
               <input
                 type="text"
